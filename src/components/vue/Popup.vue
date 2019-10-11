@@ -48,10 +48,8 @@
             <mu-text-field v-model="password" label="密码" label-float type="password"></mu-text-field>
             <br />
           </div>
-          <mu-button color="#3842ec" id="myleft" @click="f1">登陆</mu-button>
-          <mu-button>
-            注册
-          </mu-button>
+          <mu-button color="#3842ec" id="myleft" @click="submit">登陆</mu-button>
+          <mu-button>注册</mu-button>
         </div>
       </div>
     </div>
@@ -97,8 +95,8 @@ export default {
 
   data() {
     return {
-      username:"",
-      password:"",
+      username: "",
+      password: "",
       login: false,
       currentHost: null,
       translateDirectly: false,
@@ -116,6 +114,14 @@ export default {
 
   mounted() {
     document.getElementById("input").focus();
+    // console.log(localStorage.getItem("username"))
+    
+  },
+  created(){
+    console.log(localStorage.getItem("username"))
+    if(localStorage.getItem("username")){
+      this.login = true;
+    }
   },
 
   watch: {
@@ -173,8 +179,34 @@ export default {
         });
       }, 200);
     },
-    f1() {
-      this.login = true;
+    submit(){
+      console.log("wdnmd")
+      
+      this.$axios
+        .post(
+          "http://39.107.97.170:3002/login",
+          {
+            params: {
+              name: this.username,
+              password: this.password
+            }
+          },
+          {
+            // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }
+        ).then(res => {
+          if (res.data.res === "empty") {
+            alert("该用户不存在");
+          }
+          if (res.data.res === "error") {
+            alert("密码输入错误");
+          }
+          if (res.data.res === "match") {
+            localStorage.setItem("username",this.username);
+            localStorage.setItem("password",this.password);
+            this.login = true;
+          }
+        });
     }
   }
 };
@@ -189,7 +221,7 @@ export default {
 #mypassword {
   margin-top: -15px;
 }
-#myleft{
+#myleft {
   margin-left: 21px;
   margin-right: 35px;
 }

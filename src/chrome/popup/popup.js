@@ -6,8 +6,9 @@ import '@/styles/index_popup.scss'
 import 'muse-ui/lib/styles/base.less';
 import { Button, Select,TextField } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
+import axios from 'axios';
 Vue.component('Switcher', Switch)
-
+Vue.prototype.$axios = axios;
 
 Vue.use({
   install: Vue => {
