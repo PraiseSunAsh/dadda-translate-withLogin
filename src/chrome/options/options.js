@@ -6,6 +6,13 @@ import Vocabulary from '@/utils/vocabulary'
 import { _parseQuery } from '@/utils'
 import vocabularyReducers from './reducers'
 import App from '@/components/react/App'
+import Vue from 'vue';
+import 'muse-ui/lib/styles/base.less';
+import { Button, Select } from 'muse-ui';
+import 'muse-ui/lib/styles/theme.less';
+
+Vue.use(Button);
+Vue.use(Select);
 
 import translator from '../content/content'
 
