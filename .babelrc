@@ -8,7 +8,9 @@
         "loose": true,
         "useBuiltIns": true,
         "targets": {
-          "browsers": ["Chrome >= 61"]
+          "browsers": [
+            "Chrome >= 61"
+          ]
         }
       }
     ]
@@ -17,10 +19,27 @@
     "transform-object-rest-spread",
     "transform-decorators-legacy",
     "transform-class-properties",
-    ["import", {
-      "libraryName": "muse-ui",
-      "libraryDirectory": "lib",
-      "camel2DashComponentName": false
-    }]
+    [
+      "import",
+      {
+        "libraryName": "muse-ui",
+        "libraryDirectory": "lib",
+        "camel2DashComponentName": false
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": true // or 'css'
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "at",
+        "libraryDirectory": "src/components"
+      }
+    ]
   ]
 }

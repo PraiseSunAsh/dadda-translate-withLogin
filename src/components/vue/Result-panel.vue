@@ -105,11 +105,18 @@
         <div class="__result_chinese __result_chinese--simple">{{usualTranslations | removeTag}}</div>
       </div>
     </div>
-    <mu-text-field v-model="note" placeholder="你可以在这个地方写点笔记哦" ></mu-text-field>
-    <mu-button>添加</mu-button><br>
+
+    <div id="father">
+      <input
+        type="text"
+        placeholder="你可以在这里做点笔记哦(｀・ω・´)"
+        class="input-text radius size-M"
+        id="myinput"
+        v-model="note"
+      />
+    </div>
 
     <div class="__result_footer">
-      
       <div>
         <a
           v-if="inDict"
@@ -118,8 +125,6 @@
           class="__result_ex-link"
         >点击查看词根词缀</a>
         <a :href="YOUGLISH_HOST + encode(text)" target="_blank" class="__result_ex-link">从油管搜寻发音</a>
-        
-        
       </div>
 
       <transition name="fade">
@@ -171,16 +176,10 @@ import {
   TR_SETTING_YOUDAO
 } from "@/utils/constant";
 import { SOUGOU_SPOKEN_URL, CGDICT_HOST, YOUGLISH_HOST } from "@/api/host";
-import 'muse-ui/lib/styles/base.less';
-import { Button, Select,TextField } from 'muse-ui';
-import 'muse-ui/lib/styles/theme.less';
 
 export default {
   name: "result-panel",
-  components:{
-    'mu-text-field':TextField,
-    'mu-button':Button
-  },
+  components: {},
 
   mixins: [selectionMixin],
 
@@ -205,7 +204,7 @@ export default {
   // ------------------------ 数 据 --------------------------------------------------------
   data() {
     return {
-      note:"",
+      note: "",
       uuid: "",
       oxfordEle: null,
       currentVocabulary: null,
@@ -399,6 +398,9 @@ export default {
 
   // ------------------------ 组 件 方 法 --------------------------------------------------------
   methods: {
+    addnote() {
+      this.addToVocabulary();
+    },
     async refreshVocabulary() {
       this.currentVocabulary = (await this.$vocabulary.get()) || [];
     },
@@ -463,7 +465,10 @@ export default {
         $vocabulary,
         $storage
       } = this;
+      //同时添加到数据库中
+      console.log(localStorage.getItem("username"));
       console.log(this.text);
+      console.log(this.note);
       if (typeof phonetics === "string") {
         phonetics = [
           {
@@ -561,3 +566,65 @@ export default {
   }
 };
 </script>
+
+<style  scoped>
+#myinput {
+  height: 25px;
+  margin-top: 10px;
+}
+
+/*默认状态*/
+.input-text,
+.textarea {
+  box-sizing: border-box;
+  border: solid 1px #ddd;
+  width: 100%;
+  -webkit-transition: all 0.2s linear 0s;
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  transition: all 0.2s linear 0s;
+}
+.textarea {
+  height: auto;
+  font-size: 14px;
+  padding: 4px;
+}
+.input-text:hover,
+.textarea:hover {
+  border: solid 1px #3bb4f2;
+}
+/*得到焦点后*/
+.input-text.focus,
+textarea.focus {
+  border: solid 1px #0f9ae0 \9;
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0 0 8px rgba(102, 175, 233, 0.6);
+  border-radius: 10px;
+}
+/*不可点击*/
+.input-text.disabled,
+.textarea.disabled,
+.input-text.disabled.focus,
+.textarea.disabled.focus {
+  background-color: #ededed;
+  cursor: default;
+  border-color: #ddd;
+  -webkit-box-shadow: inset 0 2px 2px #e8e7e7;
+  -moz-box-shadow: inset 0 2px 2px #e8e7e7;
+  box-shadow: inset 0 2px 2px #e8e7e7;
+}
+/*只读状态*/
+.input-text.disabled,
+.textarea.disabled {
+  background-color: #e6e6e6;
+  cursor: default;
+}
+/*阴影*/
+.input-text.box-shadow,
+.textarea.box-shadow {
+  -ms-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+</style>
