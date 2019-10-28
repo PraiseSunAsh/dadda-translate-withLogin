@@ -4,7 +4,28 @@ import Storage from '@/utils/storage'
 import { TR_SETTING_BLACK_LIST_KEY } from '@/utils/constant'
 import { _removeTag, _inBlackList } from '@/utils'
 import '@/styles/index_translator.scss'
+import axios from 'axios';
+Vue.prototype.$axios = axios;
 
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://39.107.97.170:27017/article', { useNewUrlParser: true });
+// var db = mongoose.connection;
+// db.collection('news').countDocuments((err, count) => {
+//     console.log(count);
+// })
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log("收到了！！！！");
+    console.log(request.value);
+    localStorage.setItem("username", request.value);
+    this.username = localStorage.getItem("username");
+    // alert(request.value);
+    sendResponse('我收到了你的消息！');
+});
+
+
+
+console.log(localStorage.getItem("username"));
 // 组件注册
 const componentsContext = require.context('@/components', true, /.vue$/)
 componentsContext.keys().forEach(path => {

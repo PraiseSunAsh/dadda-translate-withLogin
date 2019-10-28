@@ -115,13 +115,16 @@ export default {
   mounted() {
     document.getElementById("input").focus();
     // console.log(localStorage.getItem("username"))
-    
   },
-  created(){
-    console.log(localStorage.getItem("username"))
-    if(localStorage.getItem("username")){
+  created() {
+    chrome.storage.sync.get(['username'], function(result) {
+    console.log('Value currently is ' + result);
+    console.log(result.username);
+});
+    if (localStorage.getItem("username")) {
       this.login = true;
     }
+    console.log(chrome.extension.getBackgroundPage());
   },
 
   watch: {
@@ -179,9 +182,9 @@ export default {
         });
       }, 200);
     },
-    submit(){
-      console.log("wdnmd")
-      
+    submit() {
+      console.log("wdnmd");
+
       this.$axios
         .post(
           "http://39.107.97.170:3002/login",
@@ -194,7 +197,8 @@ export default {
           {
             // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }
-        ).then(res => {
+        )
+        .then(res => {
           if (res.data.res === "empty") {
             alert("该用户不存在");
           }
@@ -202,8 +206,14 @@ export default {
             alert("密码输入错误");
           }
           if (res.data.res === "match") {
-            localStorage.setItem("username",this.username);
-            localStorage.setItem("password",this.password);
+            localStorage.setItem("username", this.username);
+            localStorage.setItem("password", this.password);
+            chrome.storage.sync.set({ "username": this.username }, function() {
+              console.log("存进去了一个");
+            });
+            chrome.storage.sync.set({ "password": this.password }, function() {
+              console.log("存进去了一个");
+            });
             this.login = true;
           }
         });

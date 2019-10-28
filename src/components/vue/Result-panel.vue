@@ -204,6 +204,7 @@ export default {
   // ------------------------ 数 据 --------------------------------------------------------
   data() {
     return {
+      username: localStorage.getItem("username"),
       note: "",
       uuid: "",
       oxfordEle: null,
@@ -374,6 +375,13 @@ export default {
   },
 
   mounted() {
+    chrome.storage.sync.get(["username"], function(result) {
+      console.log("Value currently is " + result);
+      console.log(result.username);
+      console.log(typeof(result.username))
+      localStorage.setItem('username',result.username)
+    });
+
     document.addEventListener("click", this.handleClickOutside, false);
     this.$nextTick(async _ => {
       this.font = await this.$storage.get(TR_SETTING_FONT_FAMILY, "song");
@@ -451,6 +459,9 @@ export default {
     toggleCollect() {
       if (!this.inCollection) {
         this.addToVocabulary();
+
+        //然后发送到后台
+        this.addtoDB();
       } else {
         this.delWordInVocabulary();
       }
@@ -518,6 +529,24 @@ export default {
           }
         });
       }
+    },
+    //添加到数据库(其实是发到后台QAQ)
+    addtoDB() {
+      this.$axios
+        .post(
+          "http://127.0.0.1:3002/addword",
+          {
+            params: {
+              user: this.username,
+              word: this.text,
+              note: this.note
+            }
+          },
+          {
+            // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }
+        )
+        .then(res => {});
     },
 
     async delWordInVocabulary() {
