@@ -532,6 +532,13 @@ export default {
     },
     //添加到数据库(其实是发到后台QAQ)
     addtoDB() {
+      console.log("addtoDB");
+      console.log(this.text);
+      console.log(this.phonetics[1].filename);
+      console.log(this.phonetics[1].text);
+      let transition =  this.oxfordTranslations[0].item.pos+this.oxfordTranslations[0].item.core[0].detail.zh;
+      console.log(transition);
+      console.log(this.dict);
       this.$axios
         .post(
           "https://www.jixieclub.com:8444/addword",
@@ -539,7 +546,10 @@ export default {
             params: {
               user: this.username,
               word: this.text,
-              note: this.note
+              note: this.note,
+              defn: transition,
+              audio: this.phonetics[1].filename,
+              commit: this.phonetics[1].text
             }
           },
           {
