@@ -378,8 +378,8 @@ export default {
     chrome.storage.sync.get(["username"], function(result) {
       console.log("Value currently is " + result);
       console.log(result.username);
-      console.log(typeof(result.username))
-      localStorage.setItem('username',result.username)
+      console.log(typeof result.username);
+      localStorage.setItem("username", result.username);
     });
 
     document.addEventListener("click", this.handleClickOutside, false);
@@ -534,7 +534,7 @@ export default {
     addtoDB() {
       this.$axios
         .post(
-          "http://127.0.0.1:3002/addword",
+          "https://www.jixieclub.com:8444/addword",
           {
             params: {
               user: this.username,
@@ -546,7 +546,16 @@ export default {
             // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }
         )
-        .then(res => {});
+        .then(res => {
+          console.log(res.data);
+          console.log(typeof res.data);
+          if (res.data != 1) {
+            alert("添加失败，请检查网络!");
+          }
+        })
+        .catch(function(error) {
+          alert("网络错误")
+        });
     },
 
     async delWordInVocabulary() {

@@ -58,7 +58,7 @@ const detectGo = () => {
 chrome.runtime.onInstalled.addListener(async reason => {
     if (reason.reason !== 'update') {
         Storage.set(TR_SETTING_BLACK_LIST_KEY, {})
-        Storage.set(TR_SETTING_HAS_TOAST_KEY, true)
+        Storage.set(TR_SETTING_HAS_TOAST_KEY, false)
         Storage.set(TR_SETTING_IS_DIRECTLY_KEY, true)
         Storage.set(TR_SETTING_SKIP_CHINESE_KEY, true)
         Storage.set(TR_SETTING_SHANBAY, false)
