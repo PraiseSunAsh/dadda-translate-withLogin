@@ -466,7 +466,6 @@ export default {
         this.delWordInVocabulary();
       }
     },
-
     async addToVocabulary() {
       let {
         text: word,
@@ -532,13 +531,20 @@ export default {
     },
     //添加到数据库(其实是发到后台QAQ)
     addtoDB() {
-      console.log("addtoDB");
-      console.log(this.text);
-      console.log(this.phonetics[1].filename);
-      console.log(this.phonetics[1].text);
-      let transition =  this.oxfordTranslations[0].item.pos+this.oxfordTranslations[0].item.core[0].detail.zh;
-      console.log(transition);
-      console.log(this.dict);
+      // console.log("addtoDB");
+      // console.log(this.text);
+      // console.log(this.phonetics[1].filename);
+      // console.log(this.phonetics[1].text);
+      
+      let final = "";
+      if(typeof(this.usualTranslations)=="object"){
+        final = this.oxfordTranslations[0].item.pos+this.oxfordTranslations[0].item.core[0].detail.zh;
+      }else{
+        final = this.usualTranslations;
+      }
+      
+      console.log(final);
+      console.log(typeof(final));
       this.$axios
         .post(
           "https://www.jixieclub.com:8444/addword",
@@ -547,7 +553,7 @@ export default {
               user: this.username,
               word: this.text,
               note: this.note,
-              defn: transition,
+              defn: final,
               audio: this.phonetics[1].filename,
               commit: this.phonetics[1].text
             }
