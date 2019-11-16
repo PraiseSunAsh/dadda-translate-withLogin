@@ -532,7 +532,7 @@ export default {
     //添加到数据库(其实是发到后台QAQ)
     addtoDB() {
       // console.log("addtoDB");
-      // console.log(this.text);
+      console.log(this.dict);
       // console.log(this.phonetics[1].filename);
       // console.log(this.phonetics[1].text);
       
@@ -543,8 +543,10 @@ export default {
         final = this.usualTranslations;
       }
       
-      console.log(final);
-      console.log(typeof(final));
+      let realUrl = this.dict.phonetic;
+      console.log(realUrl);
+      console.log(typeof(realUrl));
+      let sliceUrl = realUrl.slice(6);
       this.$axios
         .post(
           "https://www.jixieclub.com:8444/addword",
@@ -554,7 +556,7 @@ export default {
               word: this.text,
               note: this.note,
               defn: final,
-              audio: this.phonetics[1].filename,
+              audio: this.phonetics[1].filename||sliceUrl,
               commit: this.phonetics[1].text
             }
           },
