@@ -31,6 +31,10 @@ import {
 
 import HotReload from './hot-reload'
 
+let shanbeitmp = document.getElementsByClassName("index_left__2LkyW");
+let child = shanbeitmp[0];
+console.log("background");
+console.log(child)
 
 // 开发环境热加载
 HotReload();

@@ -547,6 +547,9 @@ export default {
       console.log(realUrl);
       console.log(typeof(realUrl));
       let sliceUrl = realUrl.slice(6);
+      let shanbeitmp = document.getElementsByClassName("index_left__2LkyW");
+      let child = shanbeitmp[0];
+      console.log(child.lastChild.innerText)
       this.$axios
         .post(
           "https://www.jixieclub.com:8444/addword",
@@ -555,7 +558,7 @@ export default {
               user: this.username,
               word: this.text,
               note: this.note,
-              defn: final,
+              defn: child.lastChild.innerText,
               audio: this.phonetics[1].filename||sliceUrl,
               commit: this.phonetics[1].text
             }
