@@ -4,4 +4,5 @@
 在原插件的基础上写了个简单的登录功能
 
 可将每一个单词添加到[ReviewCalendar](https://github.com/SeekingLight233/ReviewCalendar-)
-![](./src/info.png)
+
+![](https://www.jixieclub.com/res/img/info.PNG)
