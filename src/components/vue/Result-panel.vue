@@ -546,10 +546,9 @@ export default {
       let realUrl = this.dict.phonetic;
       console.log(realUrl);
       console.log(typeof(realUrl));
-      let sliceUrl = realUrl.slice(6);
-      let shanbeitmp = document.getElementsByClassName("index_left__2LkyW");
-      let child = shanbeitmp[0];
-      console.log(child.lastChild.innerText)
+      //人人词典句子发音
+     
+      //扇贝单词的句子
       this.$axios
         .post(
           "https://www.jixieclub.com:8444/addword",
@@ -558,8 +557,8 @@ export default {
               user: this.username,
               word: this.text,
               note: this.note,
-              defn: child.lastChild.innerText,
-              audio: this.phonetics[1].filename||sliceUrl,
+              defn: final,
+              audio: this.phonetics[1].filename,
               commit: this.phonetics[1].text
             }
           },
